@@ -15,3 +15,12 @@ ENV LC_ALL en_US.UTF-8
 RUN echo "deb http://dl.hhvm.com/ubuntu precise main" > /etc/apt/sources.list.d/hhvm.list && \
         apt-get update && \
         DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes hhvm-fastcgi
+
+# Decouple our data from our container.
+VOLUME ["/data"]
+
+EXPOSE 9000
+ADD scripts /scripts
+RUN chmod +x /scripts/start.sh
+
+ENTRYPOINT ["/scripts/start.sh"]

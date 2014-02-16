@@ -4,11 +4,11 @@ DOCKER_USER=paintedfox
 # Change this to suit your needs.
 NAME:=hhvm
 DATA_DIR:=/tmp/hhvm-fastcgi
-#PORT:=127.0.0.1:3306
+PORT:=127.0.0.1:9000
 
 RUNNING:=$(shell docker ps | grep $(NAME) | cut -f 1 -d ' ')
 ALL:=$(shell docker ps -a | grep $(NAME) | cut -f 1 -d ' ')
-DOCKER_RUN_COMMON=-name="$(NAME)" -v $(DATA_DIR):/data $(DOCKER_USER)/hhvm-fastcgi
+DOCKER_RUN_COMMON=-name="$(NAME)" -p $(PORT):9000 -v $(DATA_DIR):/data $(DOCKER_USER)/hhvm-fastcgi
 
 all: build
 
